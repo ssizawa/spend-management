@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <title>新規登録画面</title>
+    </head>
+    <body>
+        <header>
+            <h1>新規登録</h1>
+        </header>
+        <form action="/add_user" method="POST">
+            <p>ユーザー名：
+                <input type="text" name="name" id="name">
+            </p>
+            <p>パスワード：
+            <input type="password" name="password" id="password">
+            </p>
+            <input type="submit", value="新規登録">
+        </form>
+    </body>
+</html>
