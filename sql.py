@@ -26,8 +26,6 @@ class sql_arg:
         sql = "select password from User where name='"+str(name)+"'"
         cur.execute(sql)
         result_pass = cur.fetchall()
-        print('--1--')
-        print('--2--')
         return result_pass
 
     def insert_user(self, name, password):
@@ -38,3 +36,18 @@ class sql_arg:
         # print(sql)
         cur.execute(sql)
         conn.commit()
+
+    def insert_price(self, user_name, price_name, price):
+        conn.ping(reconnect=True)
+        cur = conn.cursor()
+        sql = "insert into Spend (spend_name, price, pic) VALUE ( '"+str(price_name)+ "' , '"+price+ "' , '"+str(user_name)+ "'"+ ")"
+        cur.execute(sql)
+        conn.commit()
+    
+    def get_info(self, user_name):
+        conn.ping(reconnect=True)
+        cur = conn.cursor()
+        sql = "select spend_name,price from Spend where pic ='"+str(user_name)+"'"
+        cur.execute(sql)
+        price_data=cur.fetchall()
+        return price_data

@@ -16,22 +16,38 @@ SQLARG = sql_arg()
 
 app = Flask(__name__)
 
+class User:
+    id: int
+    name: str
+    password: str
+
 @app.route('/')
 def main():
     return render_template('login.html')
+
+@app.route('/home')
+def home():
+    return render_template('index.html',user_name=User.name)
 
 @app.route('/login', methods=['POST'])
 def login():
     user_name=request.form['name']
     user_password=request.form['password']
 
+
+
     password=SQLARG.get_user(user_name, user_password)
-    print(password)
-    print(user_password)
-    if password==user_password:
-        return render_template('login.html')
+    
+    for p in password[0]:
+        new_pass=p
+
+    props={'title': new_pass, 'msg': user_password}
+    if new_pass==user_password:
+        User.name=user_name
+        User.password=user_password
+        return render_template('index.html', user_name=user_name)
     else:
-        return render_template('register.html')
+        return render_template('hello.html', props=props)
 
 @app.route('/register')
 def register():
@@ -46,6 +62,31 @@ def add_user():
 
     return render_template('login.html')
 
+@app.route('/add_price', methods=['POST'])
+def add_price():
+    price_name=request.form['price_name']
+    user_price=request.form['price']
+
+    SQLARG.insert_price(User.name, price_name, user_price)
+
+    return render_template('index.html', user_name=User.name)
+
+@app.route('/sum')
+def sum():
+    pricelist_tmp=SQLARG.get_info(User.name)
+    price_list=[]
+    sum_price=0
+    for i in pricelist_tmp:
+        price_name=i[0]
+        price=i[1]
+        sum_price+=price
+        price_info={
+            'name': price_name,
+            'price': price
+        }
+        price_list.append(price_info)
+        
+    return render_template('sum.html', price=price_list, sum_price=sum_price)
 
 if __name__ == '__main__':
     app.run(debug=True)
