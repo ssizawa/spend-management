@@ -37,17 +37,20 @@ class sql_arg:
         cur.execute(sql)
         conn.commit()
 
-    def insert_price(self, user_name, price_name, price):
+    def insert_price(self, user_name, price_name, price, date):
         conn.ping(reconnect=True)
         cur = conn.cursor()
-        sql = "insert into Spend (spend_name, price, pic) VALUE ( '"+str(price_name)+ "' , '"+price+ "' , '"+str(user_name)+ "'"+ ")"
+        sql = "insert into Spend (spend_name, price, pic, date) VALUE ( '"+str(price_name)+ "' , '"+price+ "' , '"+str(user_name)+ "' , '"+str(date)+"'"+ ")"
         cur.execute(sql)
         conn.commit()
     
-    def get_info(self, user_name):
+    def get_info(self, user_name, year, mon):
         conn.ping(reconnect=True)
         cur = conn.cursor()
-        sql = "select spend_name,price from Spend where pic ='"+str(user_name)+"'"
+        if mon<10:
+            sql = "select spend_name,price,date from Spend where pic ='"+str(user_name)+"' && DATE_FORMAT(date, '%Y%m')='"+str(year)+str(0)+str(mon)+"'"
+        else:
+            sql = "select spend_name,price,date from Spend where pic ='"+str(user_name)+"' && DATE_FORMAT(date, '%Y%m')='"+str(year)+str(mon)+"'"
         cur.execute(sql)
         price_data=cur.fetchall()
         return price_data

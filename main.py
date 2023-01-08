@@ -29,6 +29,10 @@ def main():
 def home():
     return render_template('index.html',user_name=User.name)
 
+@app.route('/spend')
+def spend():
+    return render_template('addspend.html', user_name=User.name)
+
 @app.route('/login', methods=['POST'])
 def login():
     user_name=request.form['name']
@@ -66,27 +70,52 @@ def add_user():
 def add_price():
     price_name=request.form['price_name']
     user_price=request.form['price']
+    user_date=request.form['date']
 
-    SQLARG.insert_price(User.name, price_name, user_price)
+    SQLARG.insert_price(User.name, price_name, user_price, user_date)
 
     return render_template('index.html', user_name=User.name)
 
-@app.route('/sum')
+@app.route('/month')
 def sum():
-    pricelist_tmp=SQLARG.get_info(User.name)
+    # pricelist_tmp=SQLARG.get_info(User.name)
+    # price_list=[]
+    # sum_price=0
+    # for i in pricelist_tmp:
+    #     price_name=i[0]
+    #     price=i[1]
+    #     date=i[2]
+    #     print(date)
+    #     sum_price+=price
+    #     price_info={
+    #         'name': price_name,
+    #         'price': price,
+    #         'date': date
+    #     }
+    #     price_list.append(price_info)
+        
+    return render_template('month.html')
+
+@app.route('/month/<int:year>/<int:mon>')
+def month(year, mon):
+    pricelist_tmp=SQLARG.get_info(User.name, year, mon)
     price_list=[]
     sum_price=0
     for i in pricelist_tmp:
         price_name=i[0]
         price=i[1]
+        date=i[2]
+        print(date)
         sum_price+=price
         price_info={
             'name': price_name,
-            'price': price
+            'price': price,
+            'date': date
         }
         price_list.append(price_info)
         
-    return render_template('sum.html', price=price_list, sum_price=sum_price)
+    return render_template('sum.html', price=price_list, sum_price=sum_price, year=year, mon=mon)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
