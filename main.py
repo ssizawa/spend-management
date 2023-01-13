@@ -3,17 +3,6 @@ from flask import render_template, request
 from sql import sql_arg
 SQLARG = sql_arg()
 
-# host = "database"  # docker-composeで定義したMySQLのサービス名
-# database_name = "tasks_db"
-# conn = mysql.connect(
-#     host="database",
-#     user="izawa",
-#     passwd="izawa",
-#     port=3306,
-#     database="tasks_db",
-#     buffered = True
-# )
-
 app = Flask(__name__)
 
 class User:
@@ -23,7 +12,7 @@ class User:
 
 @app.route('/')
 def main():
-    return render_template('login.html')
+    return render_template('login.html', judge=1)
 
 @app.route('/home')
 def home():
@@ -38,24 +27,24 @@ def login():
     user_name=request.form['name']
     user_password=request.form['password']
 
-
-
     password=SQLARG.get_user(user_name, user_password)
     
-    for p in password[0]:
-        new_pass=p
+    if len(password)==0:
+        return render_template('register.html', judge=0)
+    else:    
+        for p in password[0]:
+            new_pass=p
 
-    props={'title': new_pass, 'msg': user_password}
-    if new_pass==user_password:
-        User.name=user_name
-        User.password=user_password
-        return render_template('index.html', user_name=user_name)
-    else:
-        return render_template('hello.html', props=props)
+        if new_pass==user_password:
+            User.name=user_name
+            User.password=user_password
+            return render_template('index.html', user_name=User.name)
+        else:
+            return render_template('login.html', judge=0)
 
 @app.route('/register')
 def register():
-    return render_template('register.html')
+    return render_template('register.html', judge=1)
 
 @app.route('/add_user', methods=['POST'])
 def add_user():
@@ -64,7 +53,7 @@ def add_user():
 
     SQLARG.insert_user(user_name, user_password)
 
-    return render_template('login.html')
+    return render_template('login.html', judge=1)
 
 @app.route('/add_price', methods=['POST'])
 def add_price():
@@ -77,23 +66,7 @@ def add_price():
     return render_template('index.html', user_name=User.name)
 
 @app.route('/month')
-def sum():
-    # pricelist_tmp=SQLARG.get_info(User.name)
-    # price_list=[]
-    # sum_price=0
-    # for i in pricelist_tmp:
-    #     price_name=i[0]
-    #     price=i[1]
-    #     date=i[2]
-    #     print(date)
-    #     sum_price+=price
-    #     price_info={
-    #         'name': price_name,
-    #         'price': price,
-    #         'date': date
-    #     }
-    #     price_list.append(price_info)
-        
+def sum(): 
     return render_template('month.html')
 
 @app.route('/month/<int:year>/<int:mon>')

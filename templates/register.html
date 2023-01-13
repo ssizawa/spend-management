@@ -19,5 +19,10 @@
             </p>
             <input type="submit", value="新規登録">
         </form>
+        <a href="/">ログイン画面</a>
+        {% if judge==1 %}
+        {% else %}
+            <script src="../static/javascript/register_alert.js"></script> 
+        {% endif %}
     </body>
 </html>

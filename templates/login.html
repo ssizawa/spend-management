@@ -26,5 +26,9 @@
         </div>
     </form>
     <a href="/register">新規登録</a>
+    {% if judge==1 %}
+    {% else %}
+        <script src="../static/javascript/login_alert.js"></script> 
+    {% endif %}
 </body>
 </html>
