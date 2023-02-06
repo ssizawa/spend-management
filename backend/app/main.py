@@ -3,7 +3,7 @@ from flask import render_template, request
 from sql import sql_arg
 SQLARG = sql_arg()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../../static', template_folder='../../templates')
 
 class User:
     id: int
