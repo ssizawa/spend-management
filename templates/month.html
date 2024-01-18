@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link rel="icon" href="../assets/icons/favicon.ico">
+        <link rel="stylesheet" href="../assets/node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="../assets/css/settings.css">
+        <script src="../assets/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../assets/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+        <script src="../assets/js/settings.js"></script> -->
+        <title>sum</title>
+    </head>
+    <body>
+        {% for year in range(2023, 2025) %}
+        {% for mon in range(1, 13) %}
+        <a href="/month/{{ year }}/{{ mon }}">{{ year }}年{{ mon }}月</a><br>
+        {% endfor %}
+        {% endfor %}
+        <hr>
+        <a href="/home">HOME</a>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link rel="icon" href="../assets/icons/favicon.ico">
+        <link rel="stylesheet" href="../assets/node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="../assets/css/settings.css">
+        <script src="../assets/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="../assets/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+        <script src="../assets/js/settings.js"></script> -->
+        <title>index</title>
+    </head>
+    <body>
+        <header>
+            <div id="user-box">
+                <i class="bi bi-person-fill" id="user"></i><span>{{user_name}}</span>
+            </div>
+        </header>
+        <form action="/add_price" method="POST">
+            <div class="form-group has-warning">
+                <label class="form-label" id="nlabel" for="name">支出内容</label>
+                <input type="text" id="name" class="form-control" name="price_name" required>
+            </div>
+            <div class="form-group has-warning">
+                <label for="name" class="form-label" id="nlabel">金額</label>
+                <input type="text" class="form-control" id="name" name="price" required>
+            </div>
+            <div class="form-group has-warning">
+                <label for="name" class="form-label" id="nlabel">日付</label>
+                <input type="date" class="form-control" id="name" name="date" required>
+            </div>
+            <div class="botton">
+                <input type="submit" value="確定" class="btn btn-warning" id="login">
+            </div>
+        </form>
+        <hr>
+        <a href="/home">HOME</a>
+    </body>
+</html>
